@@ -1,0 +1,19 @@
+{
+  "name": "tech_blog",
+  "version": "1.0.0",
+  "description": "Technology Blog built from scratch",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tech_blog"
+  },
+  "author": "Ida Whitcomb",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.2"
+  }
+}

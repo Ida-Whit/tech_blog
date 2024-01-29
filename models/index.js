@@ -1,0 +1,2 @@
+const Blog = require('./Blog');
+

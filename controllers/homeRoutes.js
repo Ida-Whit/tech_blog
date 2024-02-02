@@ -13,3 +13,5 @@ res.render('homepage')
 router.get('/logout', async (req, res) =>
 res.render('homepage')
 );
+
+module.exports = router

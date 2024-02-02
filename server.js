@@ -1,22 +1,33 @@
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
-const routes = require('./controllers');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 //const helpers = require('');
 const sequelize = require('./config/connection');
-const SequelizeStore = require('connect-session-sequielize')(session.Store);
+const controller = require('./controllers');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-//const hbs = exphbs.create({ helpers });
+const hbs = exphbs.create();
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+const middleware = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+  next();
+}
+
+app.use(middleware)
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 const sess = {
   secret: process.env.SECRET,
@@ -35,7 +46,8 @@ const sess = {
 
 app.use(session(sess));
 
-app.use(routes);
+app.use(controller);
+
 
 sequelize
   .authenticate()

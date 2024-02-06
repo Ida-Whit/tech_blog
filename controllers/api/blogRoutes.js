@@ -1,15 +1,14 @@
 const router = require('express').Router();
 const { Blog } = require('../../models');
+const withAuth = require('../../utils/auth')
 
 //Create new blog post
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try{
         const blogData = await Blog.create({
-            author: req.body.author,
-            title: req.body.title,
-            content: req.body.content,
-            date: req.body.content
-        });
+            ...req.body,
+            user_id: req.session.user_id,
+        })
         res.status(200).json(blogData);
     } catch (err) {
         res.status(500).json(err)
@@ -17,7 +16,7 @@ router.post('/', async (req, res) => {
 });
 
 //Update blog post
-router.put('/:id', async (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
     try {
         const blogData = await Blog.update(req.body, {
             where: {
@@ -26,25 +25,32 @@ router.put('/:id', async (req, res) => {
             }
         })
         if(!blogData) {
-            return res.status(404).json({ error: 'Blog post not found' }) }
+            res.status(404).json({ error: 'Blog post not found' }) 
+            return;
+        }            
     } catch (err) {
         res.status(500).json(err)
     }
 })
 
 //Delete blog post
-router.delete('/', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
-        const blogToDelete = await Blog.findByPk({ where: {id: req.body.id} });
-        if (!blogToDelete) {
-            return res.status(404).json({ error: 'Blog post not found' });
-          }
-        await blogToDelete.destroy();
-        res.json({ message: 'Blog post deleted successfully' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    };
-});
+        const blogData = await Blog.destroy({
+            where: {
+                id: req.params.id,
+                user_id: req.session.user_id
+            }
+        })
+        if (!blogData) {
+            res.status(404).json({ message: 'No blog found under that id' });
+            return;
+        } else {
+            res.status(200).json(blogData)
+        }
+    } catch {
+        res.status(500).json(err)
+    }
+})
 
 module.exports = router;

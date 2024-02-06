@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 });
 
 //Login
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     try{
         const userData = await User.findOne({ where: {email: req.body.email } });
 
@@ -33,18 +33,19 @@ router.post('/', async (req, res) => {
             return;
         }
     
-    const validPassword = await userData.checkPassword(req.body.password);
+        const validPassword = await userData.checkPassword(req.body.password);
 
-    if(!validPassword) {
-        res
-            .status(400)
-            .json({ message: 'Incorrect email or password.' });
-        return;
-    }
-    req.session.user_id = userData.id;
-    req.session.logged_in = true;
-    req.session.save(() => {
-        res.redirect('/')
+        if(!validPassword) {
+            res
+                .status(400)
+                .json({ message: 'Incorrect email or password.' });
+            return;
+        }
+        req.session.save(() => {
+            res.redirect('/')
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+        
     });
     
     } catch (err) {
@@ -53,7 +54,7 @@ router.post('/', async (req, res) => {
 });
 
 //Logout
-router.post('/', (req, res) => {
+router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
         req.session.destroy(() => {
             res.status(204).end();

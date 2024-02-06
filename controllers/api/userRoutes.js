@@ -4,17 +4,11 @@ const { User } = require('../../models');
 //Create New User
 router.post('/', async (req, res) => {
     try{
-        const userData = await User.create({
-            name: req.body.email,
-            email: req.body.email,
-            password: req.body.password,
-        });
-
-        req.session.save(async () => {
+        const userData = await User.create(req.body);
+        req.session.save(() => {
+            req.session.user_id = userData.id;
             req.session.logged_in = true;
-        
-        res.status(200).json(userData);
-
+            res.status(200).json(userData);
         });
     } catch (err) {
         res.status(500).json(err)
@@ -31,25 +25,23 @@ router.post('/login', async (req, res) => {
                 .status(400)
                 .json({ message: 'Incorrect email or password.' });
             return;
-        }
-    
-        const validPassword = await userData.checkPassword(req.body.password);
-
-        if(!validPassword) {
-            res
-                .status(400)
-                .json({ message: 'Incorrect email or password.' });
-            return;
-        }
-        req.session.save(() => {
+        } else {
+            const validPassword = await userData.checkPassword(req.body.password);
+            if(!validPassword) {
+                res
+                    .status(400)
+                    .json({ message: 'Incorrect email or password.' });
+                return;
+        } else {
+            req.session.save(() => {
             res.redirect('/')
             req.session.user_id = userData.id;
             req.session.logged_in = true;
-        
-    });
-    
-    } catch (err) {
-        res.status(500).json(err);
+            });
+        }
+    }
+} catch (err) {
+    res.status(500).json(err);
     }
 });
 

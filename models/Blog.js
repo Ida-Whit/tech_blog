@@ -27,7 +27,7 @@ Blog.init(
       allowNull: false
     },
     date: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.STRING,
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },

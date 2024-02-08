@@ -1,6 +1,17 @@
+<!--Page for displaying your current blog posts and creating a new blog post-->
 <div>
-    <h2>Your Dashboard</h2>
+    <h3>Your Dashboard</h3>
 </div>
+
+{{#if blogs.length}}
+<div>
+    <h2>Current Posts:</h2>
+    {{#each blogs as |blog|}}
+    <h4><a href="/edit/{{blog.id}}"></a></h4>
+    <button type="delete" class="btn btn-primary">Delete</button>
+    {{/each}}
+</div>
+{{/if}}
 
 <div class="new-post">
     <h3>Create New Post:</h3>

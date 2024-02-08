@@ -1,0 +1,16 @@
+<!--This page is for users to view posts and their comments-->
+<div>
+    {{blog.title}}
+    <p>Created by {{blog.user.name}} on {{blog.date}}</p>
+    <p>{{blog.content}}</p>
+</div>
+
+{{#if blog.comments.length}}
+<h2>Comments</h2>
+<div>
+    {{#each blog.comments}}
+    <div>{{comment}}</div>
+    <div>Made by {{user.name}} on {{comment.date}}</div>
+    {{/each}}
+</div>
+{{/if}}

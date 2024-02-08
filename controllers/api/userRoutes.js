@@ -25,21 +25,16 @@ router.post('/login', async (req, res) => {
                 .status(400)
                 .json({ message: 'Incorrect email or password.' });
             return;
-        } else {
-            const validPassword = await userData.checkPassword(req.body.password);
-            if(!validPassword) {
-                res
-                    .status(400)
-                    .json({ message: 'Incorrect email or password.' });
-                return;
-        } else {
-            req.session.save(() => {
-            res.redirect('/')
+        } const validPassword = await userData.checkPassword(req.body.password);
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect email or password.' });
+            return;
+        }
             req.session.user_id = userData.id;
             req.session.logged_in = true;
+            req.session.save(() => {
+                res.redirect('/')
             });
-        }
-    }
 } catch (err) {
     res.status(500).json(err);
     }

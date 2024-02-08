@@ -24,10 +24,10 @@ router.get('/', async (req, res) => {
 //Login
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
-        res.redirect('/blogs');
+        res.redirect('/dashboard');
         return;
     }
-    res.render('homepage');
+    res.render('login');
 });
 
 //Find a blog by its id number
@@ -55,7 +55,7 @@ router.get('blogs/:id', async (req, res) => {
         }
         
         const blog = blogData.get({ plain:true });
-        res.render('blogid', {
+        res.render('blogpost', {
             blog,
             logged_in: req.session.logged_in
         });
@@ -64,18 +64,18 @@ router.get('blogs/:id', async (req, res) => {
     }
 });
 
-//Redirect to create new blog post if logged in
-router.get('/create', withAuth, (req, res) => {
-    res.render('create', {logged_in: req.session.logged_in})
-});
-
 //Redirect to signup page
 router.get('/signup', async (req, res) =>
 res.render('signup')
 );
 
+//Logout
+router.get('/logout', (req, res) => 
+    res.render('homepage')
+)
+
 //Display all blogs posted by user
-router.get('/blogs', withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
     try {
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
@@ -84,7 +84,7 @@ router.get('/blogs', withAuth, async (req, res) => {
 
         const user = userData.get({ plain: true });
 
-        res.render('newblogs', {
+        res.render('dashboard', {
             ...user,
             logged_in: req.session.logged_in
         });
@@ -94,7 +94,7 @@ router.get('/blogs', withAuth, async (req, res) => {
 })
 
 //Update blog post by id
-router.get('/update/:id', async(req, res) => {
+router.get('/edit/:id', async(req, res) => {
     try {
         const blogData = await Blog.findByPk(req.params.id, {
             include:{
@@ -103,7 +103,7 @@ router.get('/update/:id', async(req, res) => {
             }
         })
         const blog = blogData.get({ plain: true })
-        res.render('update', {
+        res.render('edit', {
             ...blog,
             logged_in: req.session.logged_in
         })

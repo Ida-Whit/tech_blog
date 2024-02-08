@@ -27,7 +27,7 @@ router.get('/login', (req, res) => {
         res.redirect('/blogs');
         return;
     }
-    res.render('login');
+    res.render('homepage');
 });
 
 //Find a blog by its id number
@@ -111,6 +111,7 @@ router.get('/update/:id', async(req, res) => {
         res.status(500).json(err)
     }
 })
+
 
 
 module.exports = router

@@ -63,3 +63,8 @@ li{
   border: 1px solid #dddddd;
   border-radius: 10px;
 }
+
+.blog-post {
+  margin-bottom: 20px;
+  display: block;
+}

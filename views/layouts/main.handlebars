@@ -14,18 +14,21 @@
     <nav>
       {{#if logged_in}}
       <a href="/logout" id="logout">Logout</a>
+      <a href="/dashboard" id="dashboard">Dashboard</a>
       {{else}}
       <a href="/login" id="login">Login</a>
-      <a href="/signup" id="login">Signup</a>
       {{/if}}
   </nav>
+  {{#if logged_in}}
     <h1>
       Technology Blog Spot
     </h1>
-  </header>
-  <div id="text">
+    {{else}}
   <h1>Welcome to the Technology Blog</h1>
     <h3>Login or Signup to Begin</h3>
+    {{/if}}
+  </header>
+  <div id="text">
 </div>
   <main>
     {{{ body }}}

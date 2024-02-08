@@ -1,9 +1,13 @@
 {{#each blogs as |blog| }}
+<div class = "blogPost">
     <div>
-
+        <a href="'/blogs/{{blog.id}}"> {{blog.title}}</a>
     </div>
+    <h3>
+        <p>
+            Post Date: {{blog.date}}
+            Post: {{blog.content}}
+        </p>
+    </h3>
+</div>
 {{/each}}
-
-<script src=""></script>
-
-<script src=""></script>

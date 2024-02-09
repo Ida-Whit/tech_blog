@@ -1,6 +1,5 @@
 const goSignup = async (event) => {
     event.preventDefault();
-
   
     // Collect values from the login form
     const name = document.querySelector('#name-signup')

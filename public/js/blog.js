@@ -2,17 +2,17 @@ const newPost = async (event) => {
     event.preventDefault();
 
     const title = document.querySelector('#exampleTitle').value.trim();
-    const description = document.querySelector('#exampleInputPost').value.trim();
-
-    if (title && description) {
+    const content = document.querySelector('#exampleInputPost').value.trim();
+    
+    if (title && content) {
         const response = await fetch('api/blogs', {
             method: 'POST',
-            body: JSON.stringify({ title, description }),
+            body: JSON.stringify({ title, content }),
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-
+        
         if (response.ok) {
             document.location.replace('/');
         } else {
@@ -23,4 +23,4 @@ const newPost = async (event) => {
 
 document
     .querySelector('#submit')
-    .addEventListener('submit', newPost);
+    .addEventListener('click', newPost);

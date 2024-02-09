@@ -1,6 +1,8 @@
 :root{
     --primary: rgb(58, 7, 7);
     --secondary: rgb(225, 204, 176);
+    --light: white;
+    --dark: black
 }
 
 body{
@@ -16,20 +18,44 @@ body{
 header{
     padding: 35px;
     background:var(--primary);
-    color: white
+    color: var(--light)
 }
 
 main{
     display: block;
     flex-grow: 2;
-    background-color: (var(--secondary));
+    background-color: var(--secondary);
 }
 
+#current{
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: var(--dark);
+}
+
+a:hover{
+    color: var(--primary);
+}
 
 nav a {
-    color: white;
+    color: var(--light);
     padding: 15px 25px ;
     text-decoration: double;
+    text-align: center;
+}
+
+h5{
+    background-color: var(--primary);
+    width: 50%;
+    color: var(--dark);
+    border-radius: 20%;
+}
+
+h1{
+    color: var(--dark);
     text-align: center;
 }
 

@@ -74,6 +74,11 @@ router.get('/logout', (req, res) =>
     res.render('homepage')
 )
 
+//Redirect to mainpage
+router.get('/main', (req, res) =>
+    res.render('homepage')
+);
+
 //Display all blogs posted by user
 router.get('/dashboard', withAuth, async (req, res) => {
     try {

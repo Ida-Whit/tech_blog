@@ -1,11 +1,13 @@
 <!--Page for editing a blog post-->
 <div>
 <p>Title:</p>
-    <textarea>{{title}}</textarea>
+    <textarea id="title">{{title}}</textarea>
 </div>
 
 <div>
     <p>Description:</p>
-        <textarea>{{content}}</textarea>
+        <textarea id="content">{{content}}</textarea>
 </div>
-    <button class="btn btn-primary" type="Update">Update</button>
+    <button id="edit" class="btn btn-primary" data-update="{{id}}" type="Update">Update</button>
+
+<script src="/js/edit.js"></script>

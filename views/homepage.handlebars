@@ -1,4 +1,5 @@
 <!--This page displays all blogs posted on this page-->
+{{#if logged_in}}
 {{#each blogs as |blog| }}
 <div class = "blogPost">
     <div>
@@ -11,11 +12,11 @@
         </p>
     </h3>
       <div class="form-group">
-    <label for="exampleInputComment">Password</label>
+    <label for="exampleInputComment">Comment</label>
     <input type="comment" id="comment" class="form-control" id="exampleInputComment" placeholder="Comment">
-    <button type="comment" id="commentBtn" class="btn btn-primary">Comment</button>
+    <button type="comment" id="commentBtn" class="btn btn-primary">Submit</button>
     </div>
 </div>
 {{/each}}
-
+{{/if}}
 <script src="/public/js/comment.js"></script>
